@@ -109,12 +109,14 @@ var Bank = /** @class */ (function () {
         return this.branches.includes(branch);
     };
     Bank.prototype.listCustomers = function (branch, includeTransactions) {
-        if (this.branches.includes(branch)) {
-            console.log("Customers in ".concat(branch.getName(), ":"));
+        if (this.checkBranch(branch)) {
             branch.getCustomers().forEach(function (customer) {
                 console.log("Customer Name: ".concat(customer.getName(), ", Customer ID: ").concat(customer.getId()));
                 if (includeTransactions) {
-                    console.log("Transactions: ".concat(JSON.stringify(customer.getTransactions())));
+                    var transactions = customer.getTransactions();
+                    transactions.forEach(function (transaction) {
+                        console.log("Transactions: ".concat(transaction.amount, " , at ").concat(transaction.date));
+                    });
                 }
             });
         }

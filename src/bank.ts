@@ -132,12 +132,14 @@ class Bank {
   }
 
   listCustomers(branch: Branch, includeTransactions: boolean): void {
-      if (this.branches.includes(branch)) {
-          console.log(`Customers in ${branch.getName()}:`);
+      if (this.checkBranch(branch)) {
           branch.getCustomers().forEach(customer => {
               console.log(`Customer Name: ${customer.getName()}, Customer ID: ${customer.getId()}`);
               if (includeTransactions) {
-                  console.log(`Transactions: ${JSON.stringify(customer.getTransactions())}`);
+                const transactions = customer.getTransactions();
+                transactions.forEach(transaction => {
+                console.log(`Transactions: ${transaction.amount} , at ${transaction.date}`);
+              });
               }
           });
       } else {
@@ -171,6 +173,7 @@ arizonaBank.addCustomer(sunBranch, customer2);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
+
 
 customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
