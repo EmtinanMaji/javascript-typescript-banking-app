@@ -150,6 +150,22 @@ class Bank {
           console.log("Branch does not belong to the bank.");
       }
   }
+  
+    searchCustomers(customerName: string): boolean {
+      let found = false;
+      this.branches.forEach(branch => {
+          if (branch.getCustomers().find(customer =>
+              customer.getName().toLowerCase().includes(customerName.toLowerCase()) 
+          )) {
+            console.log(`Customer (${customerName}) found`);
+            found = true;
+          }
+      });
+      if (!found){
+        console.log(`Customer (${customerName}) not found`);
+      }
+      return found;      
+}
 }
 
 
@@ -190,3 +206,7 @@ console.log("---------------------------------------------------------")
 
 arizonaBank.listCustomers(sunBranch, true);
 console.log("---------------------------------------------------------")
+
+arizonaBank.searchCustomers("Anna");
+
+arizonaBank.searchCustomers("Emtinan");

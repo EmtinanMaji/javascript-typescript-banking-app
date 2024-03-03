@@ -129,6 +129,21 @@ var Bank = /** @class */ (function () {
             console.log("Branch does not belong to the bank.");
         }
     };
+    Bank.prototype.searchCustomers = function (customerName) {
+        var found = false;
+        this.branches.forEach(function (branch) {
+            if (branch.getCustomers().find(function (customer) {
+                return customer.getName().toLowerCase().includes(customerName.toLowerCase());
+            })) {
+                console.log("Customer (".concat(customerName, ") found"));
+                found = true;
+            }
+        });
+        if (!found) {
+            console.log("Customer (".concat(customerName, ") not found"));
+        }
+        return found;
+    };
     return Bank;
 }());
 var arizonaBank = new Bank("Arizona");
@@ -160,3 +175,5 @@ arizonaBank.listCustomers(westBranch, true);
 console.log("---------------------------------------------------------");
 arizonaBank.listCustomers(sunBranch, true);
 console.log("---------------------------------------------------------");
+arizonaBank.searchCustomers("Anna");
+arizonaBank.searchCustomers("Emtinan");
